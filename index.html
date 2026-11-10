@@ -1,0 +1,562 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced RAG System</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+
+        header {
+            background: #172554;
+            color: white;
+            text-align: center;
+            padding: 25px 15px;
+        }
+
+        header h1 {
+            margin: 0 0 8px;
+        }
+
+        header p {
+            margin: 0;
+            color: #dbeafe;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 16px;
+        }
+
+        .panel {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #172554;
+        }
+
+        .upload-box {
+            border: 2px dashed #93c5fd;
+            background: #f8fafc;
+            padding: 22px;
+            border-radius: 10px;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            margin: 12px 0;
+        }
+
+        button {
+            border: none;
+            border-radius: 8px;
+            padding: 11px 17px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .primary:hover {
+            background: #1d4ed8;
+        }
+
+        .secondary {
+            background: #e2e8f0;
+            color: #334155;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 9px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 95px;
+            padding: 13px;
+            font-family: inherit;
+            font-size: 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            outline: 2px solid #93c5fd;
+            border-color: #2563eb;
+        }
+
+        .status {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        #documentInfo {
+            display: none;
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            padding: 13px;
+            border-radius: 8px;
+            margin-top: 15px;
+            overflow-wrap: anywhere;
+        }
+
+        #chatHistory {
+            margin-top: 20px;
+        }
+
+        .message {
+            padding: 17px;
+            margin-bottom: 16px;
+            border-radius: 10px;
+            overflow-wrap: anywhere;
+        }
+
+        .user-message {
+            background: #eff6ff;
+            border: 1px solid #dbeafe;
+        }
+
+        .assistant-message {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+
+        .message-label {
+            color: #64748b;
+            font-size: 12px;
+            font-weight: bold;
+            margin: 0 0 9px;
+        }
+
+        .message-content {
+            white-space: pre-wrap;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #64748b;
+            padding: 25px;
+            border: 1px dashed #cbd5e1;
+            border-radius: 10px;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        a {
+            color: #2563eb;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            .panel {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Advanced RAG System</h1>
+    <p>Upload your documents and ask questions using AI.</p>
+</header>
+
+<main class="container">
+
+    <section class="panel">
+        
+        <h2>1. Upload Your Document</h2>
+
+        <div class="upload-box">
+            <label for="documentFile">Choose a PDF or TXT file</label>
+
+            <input
+                type="file"
+                id="documentFile"
+                accept=".pdf,.txt,application/pdf,text/plain"
+            >
+
+            <button
+                type="button"
+                class="primary"
+                id="uploadButton"
+                onclick="uploadDocument()"
+            >
+                Upload and Process
+            </button>
+
+            <p class="status" id="uploadStatus" role="status" aria-live="polite">
+                Select a document to get started.
+            </p>
+        </div>
+
+        <div id="documentInfo" role="status" aria-live="polite"></div>
+    </section>
+
+    <section class="panel">
+        <h2>2. Ask Questions</h2>
+
+        <p class="status">
+            Upload a document to ask questions about it. Without an upload,
+            you can use your existing knowledge base.
+        </p>
+
+        <label for="question">Your question</label>
+
+        <textarea
+            id="question"
+            maxlength="2000"
+            placeholder="Example: What are the main findings in this document?"
+        ></textarea>
+
+        <div class="actions">
+            <button
+                type="button"
+                class="primary"
+                id="askButton"
+                onclick="askQuestion()"
+            >
+                Ask Question
+            </button>
+
+            <button
+                type="button"
+                class="secondary"
+                id="clearButton"
+                onclick="clearChat()"
+            >
+                Clear Chat
+            </button>
+        </div>
+
+        <p class="status" id="chatStatus" role="status" aria-live="polite">
+            Ready.
+        </p>
+
+        <div id="chatHistory" aria-label="Conversation history">
+            <div class="empty-state" id="emptyState">
+                Your questions and answers will appear here.
+            </div>
+        </div>
+
+        <p>
+            <a
+                href="http://127.0.0.1:8000/docs"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                View API Documentation
+            </a>
+        </p>
+    </section>
+
+</main>
+
+<footer>
+    Advanced RAG System | FAISS · BM25 · Hybrid Search · CrossEncoder · Gemini
+</footer>
+
+<script>
+    const API_BASE = "http://127.0.0.1:8000";
+
+    let uploadedDocumentId = null;
+    let isUploading = false;
+    let isAsking = false;
+
+    const fileInput = document.getElementById("documentFile");
+    const uploadButton = document.getElementById("uploadButton");
+    const askButton = document.getElementById("askButton");
+    const clearButton = document.getElementById("clearButton");
+    const questionInput = document.getElementById("question");
+    const chatHistory = document.getElementById("chatHistory");
+
+    function formatAnswer(text) {
+        return text
+            .replace(/\\([`*])/g, "$1")
+            .replace(/^\s*[-*]\s+/gm, "• ")
+            .replace(/^\s*#{1,6}\s+/gm, "");
+    }
+
+    function addMessage(label, content, className) {
+        const message = document.createElement("article");
+        message.className = "message " + className;
+
+        const heading = document.createElement("p");
+        heading.className = "message-label";
+        heading.textContent = label;
+
+        const body = document.createElement("p");
+        body.className = "message-content";
+        body.textContent = formatAnswer(content);
+
+        message.appendChild(heading);
+        message.appendChild(body);
+        chatHistory.appendChild(message);
+
+        return message;
+    }
+
+    async function uploadDocument() {
+        if (isUploading || isAsking) {
+            return;
+        }
+
+        const file = fileInput.files[0];
+
+        if (!file) {
+            document.getElementById("uploadStatus").textContent =
+                "Please select a PDF or TXT file.";
+            return;
+        }
+
+        const extension = file.name.split(".").pop().toLowerCase();
+
+        if (!["pdf", "txt"].includes(extension)) {
+            document.getElementById("uploadStatus").textContent =
+                "Only PDF and TXT files are supported.";
+            return;
+        }
+
+        // A practical browser-side check; enforce the limit on the server too.
+        const maxSize = 10 * 1024 * 1024;
+
+        if (file.size > maxSize) {
+            document.getElementById("uploadStatus").textContent =
+                "The file is too large. Choose a file smaller than 10 MB.";
+            return;
+        }
+
+        isUploading = true;
+        uploadButton.disabled = true;
+        askButton.disabled = true;
+
+        document.getElementById("uploadStatus").textContent =
+            "Uploading and processing your document. This may take a while...";
+
+        try {
+            const formData = new FormData();
+            formData.append("file", file);
+
+            const response = await fetch(API_BASE + "/upload", {
+                method: "POST",
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(
+                    data.detail || "Document upload failed."
+                );
+            }
+
+            uploadedDocumentId = data.document_id;
+
+            const documentInfo = document.getElementById("documentInfo");
+            documentInfo.replaceChildren();
+
+            const filename = document.createElement("p");
+            filename.textContent = "Document: " + data.filename;
+
+            const chunks = document.createElement("p");
+            chunks.textContent = "Chunks created: " + data.chunks_created;
+
+            const note = document.createElement("p");
+            note.textContent =
+                "Your questions will now use this uploaded document.";
+
+            documentInfo.append(filename, chunks, note);
+            documentInfo.style.display = "block";
+
+            document.getElementById("uploadStatus").textContent =
+                "Document uploaded successfully.";
+
+            document.getElementById("chatStatus").textContent =
+                "Ready to answer questions about " + data.filename + ".";
+
+            clearChat();
+
+        } catch (error) {
+            document.getElementById("uploadStatus").textContent =
+                "Upload error: " + error.message +
+                " Check the API connection and try again.";
+
+        } finally {
+            isUploading = false;
+            uploadButton.disabled = false;
+            askButton.disabled = false;
+        }
+    }
+
+    async function askQuestion() {
+        if (isAsking || isUploading) {
+            return;
+        }
+
+        const question = questionInput.value.trim();
+
+        if (!question) {
+            document.getElementById("chatStatus").textContent =
+                "Please enter a question first.";
+            questionInput.focus();
+            return;
+        }
+
+        isAsking = true;
+        askButton.disabled = true;
+        uploadButton.disabled = true;
+        clearButton.disabled = true;
+        askButton.textContent = "Thinking...";
+
+        document.getElementById("chatStatus").textContent =
+            "Searching your document and generating an answer...";
+
+        const emptyState = document.getElementById("emptyState");
+
+        if (emptyState) {
+            emptyState.remove();
+        }
+
+        addMessage("YOUR QUESTION", question, "user-message");
+
+        const answerMessage = addMessage(
+            "ASSISTANT",
+            "Please wait while the answer is generated...",
+            "assistant-message"
+        );
+
+        questionInput.value = "";
+
+        try {
+            let endpoint;
+            let requestBody;
+
+            if (uploadedDocumentId) {
+                endpoint = API_BASE + "/ask-uploaded";
+
+                requestBody = {
+                    document_id: uploadedDocumentId,
+                    question: question
+                };
+            } else {
+                endpoint = API_BASE + "/ask";
+
+                requestBody = {
+                    question: question
+                };
+            }
+
+            const response = await fetch(endpoint, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(requestBody)
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(
+                    data.detail || "Question request failed."
+                );
+            }
+
+            answerMessage.querySelector(".message-content").textContent =
+                formatAnswer(data.answer);
+
+            document.getElementById("chatStatus").textContent =
+                "Answer generated successfully.";
+
+        } catch (error) {
+            answerMessage.querySelector(".message-label").textContent =
+                "ERROR";
+
+            answerMessage.querySelector(".message-content").textContent =
+                error.message +
+                " If the server restarted, upload your document again.";
+
+            document.getElementById("chatStatus").textContent =
+                "Could not retrieve the answer.";
+
+        } finally {
+            isAsking = false;
+            askButton.disabled = false;
+            uploadButton.disabled = false;
+            clearButton.disabled = false;
+            askButton.textContent = "Ask Question";
+            questionInput.focus();
+        }
+    }
+
+    function clearChat() {
+        if (isAsking || isUploading) {
+            return;
+        }
+
+        chatHistory.replaceChildren();
+
+        const emptyState = document.createElement("div");
+        emptyState.className = "empty-state";
+        emptyState.id = "emptyState";
+        emptyState.textContent =
+            "Your questions and answers will appear here.";
+
+        chatHistory.appendChild(emptyState);
+        questionInput.value = "";
+    }
+
+    questionInput.addEventListener("keydown", function(event) {
+        if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            askQuestion();
+        }
+    });
+</script>
+
+</body>
+</html>

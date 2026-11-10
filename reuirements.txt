@@ -1,0 +1,29 @@
+
+# Advanced RAG System - Requirements
+
+# LangChain and document processing
+langchain
+langchain-community
+langchain-text-splitters
+pypdf
+
+# Embeddings and semantic search
+sentence-transformers
+faiss-cpu
+numpy
+
+# Hybrid retrieval
+rank-bm25
+
+# Gemini answer generation
+langchain-google-genai
+
+# API backend
+fastapi
+uvicorn[standard]
+python-multipart
+
+# Configuration and evaluation
+python-dotenv
+scikit-learn
+pytest
