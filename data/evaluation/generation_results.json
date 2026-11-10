@@ -1,0 +1,145 @@
+[
+  {
+    "question": "Why might a database connection fail?",
+    "expected_answerable": true,
+    "relevant_sources": [
+      "database.txt",
+      "sample.txt"
+    ],
+    "answer": "Based on the provided evidence, a database connection may fail due to the following reasons:\n\n* **Incorrect user credentials** [sample.txt, Chunk ID: 4; database.txt, Chunk ID: 0]\n* **Network problems or network connectivity problems** [sample.txt, Chunk ID: 4; database.txt, Chunk ID: 0]\n* **An overloaded database** [sample.txt, Chunk ID: 4]\n* **Unavailable database servers** [database.txt, Chunk ID: 0]\n* **Firewall restrictions** [database.txt, Chunk ID: 0]",
+    "abstention_detected": false,
+    "citation_like_text_detected": true,
+    "basic_behavior_check": true
+  },
+  {
+    "question": "How can I protect a server against unauthorised access?",
+    "expected_answerable": true,
+    "relevant_sources": [
+      "security.txt"
+    ],
+    "answer": "To protect a server against unauthorised access, you should:\n\n* Use strong passwords and multi-factor authentication.\n* Restrict administrative access to authorised users only.\n* Never store passwords directly in source code.\n\n*(Source: security.txt, Chunk ID: 7)*",
+    "abstention_detected": false,
+    "citation_like_text_detected": true,
+    "basic_behavior_check": true
+  },
+  {
+    "question": "How can I improve slow database queries?",
+    "expected_answerable": true,
+    "relevant_sources": [
+      "database.txt"
+    ],
+    "answer": "To improve slow database queries, the provided text recommends taking the following actions:\n\n* Examine execution plans [Source: database.txt, Chunk 2].\n* Identify missing indexes [Source: database.txt, Chunk 2].\n\nAdditionally, the evidence notes that slow queries can be caused by missing indexes, inefficient SQL queries, excessive concurrent connections, or insufficient\n memory [Source: database.txt, Chunk 1]. *Note: The provided text lists these causes, but only specifically instructs examining execution plans and finding missing indexes as the recommended actions.*",
+    "abstention_detected": false,
+    "citation_like_text_detected": true,
+    "basic_behavior_check": true
+  },
+  {
+    "question": "What is the warranty period of the server?",
+    "expected_answerable": false,
+    "relevant_sources": [],
+    "answer": "Based on the supplied evidence, there is no information about the warranty period of the server.",
+    "abstention_detected": true,
+    "citation_like_text_detected": false,
+    "basic_behavior_check": true
+  },
+  {
+    "question": "What is the server's purchase price?",
+    "expected_answerable": false,
+    "relevant_sources": [],
+    "answer": "Based on the provided evidence, there is no information about the server's purchase price.",
+    "abstention_detected": true,
+    "basic_behavior_check": true
+  },
+  {
+    "question": "Who manufactured the server?",
+    "expected_answerable": false,
+    "relevant_sources": [],
+    "answer": "Based on the provided evidence, it is not mentioned who manufactured the server. \n\n(Source: sample.txt, Chunk IDs: 3, 5, 6)",
+    "abstention_detected": true,
+    "basic_behavior_check": true
+  },
+  {
+    "question": "What can cause a server to overheat?",
+    "expected_answerable": true,
+    "relevant_sources": [
+      "sample.txt"
+    ],
+    "answer": "A server can overheat when:\n* Its cooling fans fail [sample.txt Chunk 3].\n* Its airflow is blocked [sample.txt Chunk 3].",
+    "abstention_detected": false,
+    "basic_behavior_check": true
+  },
+  {
+    "question": "How can server overheating be addressed?",
+    "expected_answerable": true,
+    "relevant_sources": [
+      "sample.txt"
+    ],
+    "answer": "To address server overheating, you should take the following actions:\n\n* Inspect the cooling fans.\n* Remove airflow obstructions.\n\n(Source: sample.txt, Chunk ID: 5)",
+    "abstention_detected": false,
+    "basic_behavior_check": true
+  },
+  {
+    "question": "What security measures should administrators use?",
+    "expected_answerable": true,
+    "relevant_sources": [
+      "security.txt"
+    ],
+    "answer": "Based on the provided evidence, administrators should use the following security measures:\n\n**Authentication Measures:**\n* Use strong passwords [security.txt Chunk 7].\n* Use multi-factor authentication [security.txt Chunk 7].\n* Restrict administrative access strictly to authorised users [security.txt Chunk 7].\n* Never store passwords directly inside source code [security.txt Chunk 7].\n\n**Software Update Measures:**\n* Regularly apply security patches to fix known vulnerabilities [security.txt Chunk 8].\n* Test all updates before deploying them to production systems [security.txt Chunk 8].\n\n*Limitation note:* The provided evidence only covers authentication and software update guidelines from the server security manual, so it may not include every security measure an administrator needs to take.",
+    "abstention_detected": false,
+    "basic_behavior_check": true
+  },
+  {
+    "question": "Why can missing database indexes cause problems?",
+    "expected_answerable": true,
+    "relevant_sources": [
+      "database.txt"
+    ],
+    "answer": "Based on the provided evidence, missing database indexes can cause slow database queries (Source: database.txt, Chunk ID: 1).",
+    "abstention_detected": false,
+    "basic_behavior_check": true
+  },
+  {
+    "question": "What can happen when server airflow is blocked?",
+    "expected_answerable": true,
+    "relevant_sources": [
+      "sample.txt"
+    ],
+    "answer": "When server airflow is blocked, the following can happen:\n\n* The server may overheat.\n* High temperatures caused by overheating can reduce server performance.\n* High temperatures can cause unexpected shutdowns.\n\n(Source: sample.txt, Chunk ID: 3)",
+    "abstention_detected": false,
+    "basic_behavior_check": true
+  },
+  {
+    "question": "Why should passwords not be stored in source code?",
+    "expected_answerable": true,
+    "relevant_sources": [
+      "security.txt"
+    ],
+    "answer": "Based on the provided evidence, there is no explanation given for *why* passwords should not be stored in source code. \n\nThe evidence only states the rule: \"Never store passwords directly in source code\" [Source: security.txt, Chunk ID: 7], but it does not provide the reasons behind this rule.",
+    "abstention_detected": false,
+    "basic_behavior_check": true
+  },
+  {
+    "question": "When was the server originally purchased?",
+    "expected_answerable": false,
+    "relevant_sources": [],
+    "answer": "Based on the provided evidence, there is no information about when the server was originally purchased.",
+    "abstention_detected": true,
+    "basic_behavior_check": true
+  },
+  {
+    "question": "What is the server's serial number?",
+    "expected_answerable": false,
+    "relevant_sources": [],
+    "answer": "Based on the provided evidence, the server's serial number is not mentioned.",
+    "abstention_detected": true,
+    "basic_behavior_check": true
+  },
+  {
+    "question": "Where is the server physically located?",
+    "expected_answerable": false,
+    "relevant_sources": [],
+    "answer": "Based on the provided evidence, there is no information about where the server is physically located.",
+    "abstention_detected": true,
+    "basic_behavior_check": true
+  }
+]

@@ -1,0 +1,22 @@
+
+Server Security Manual
+
+Section 1: Authentication
+
+Use strong passwords and multi-factor authentication.
+Restrict administrative access to authorised users.
+Never store passwords directly in source code.
+
+Section 2: Software Updates
+
+Apply security patches regularly to address known
+vulnerabilities. Test updates before deploying them
+to production systems.
+
+Section 3: Monitoring
+
+Review system logs for suspicious activity.
+Monitor repeated failed login attempts and investigate
+unexpected privilege changes.
+
+

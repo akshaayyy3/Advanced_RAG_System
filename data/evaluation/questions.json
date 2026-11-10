@@ -1,0 +1,78 @@
+
+[
+  {
+    "question": "Why might a database connection fail?",
+    "relevant_sources": ["database.txt", "sample.txt"],
+    "answerable": true
+  },
+  {
+    "question": "How can I protect a server against unauthorised access?",
+    "relevant_sources": ["security.txt"],
+    "answerable": true
+  },
+  {
+    "question": "How can I improve slow database queries?",
+    "relevant_sources": ["database.txt"],
+    "answerable": true
+  },
+  {
+    "question": "What can cause a server to overheat?",
+    "relevant_sources": ["sample.txt"],
+    "answerable": true
+  },
+  {
+    "question": "How can server overheating be addressed?",
+    "relevant_sources": ["sample.txt"],
+    "answerable": true
+  },
+  {
+    "question": "What security measures should administrators use?",
+    "relevant_sources": ["security.txt"],
+    "answerable": true
+  },
+  {
+    "question": "Why can missing database indexes cause problems?",
+    "relevant_sources": ["database.txt"],
+    "answerable": true
+  },
+  {
+    "question": "What can happen when server airflow is blocked?",
+    "relevant_sources": ["sample.txt"],
+    "answerable": true
+  },
+  {
+    "question": "Why should passwords not be stored in source code?",
+    "relevant_sources": ["security.txt"],
+    "answerable": true
+  },
+  {
+    "question": "What is the warranty period of the server?",
+    "relevant_sources": [],
+    "answerable": false
+  },
+  {
+    "question": "What is the server's purchase price?",
+    "relevant_sources": [],
+    "answerable": false
+  },
+  {
+    "question": "Who manufactured the server?",
+    "relevant_sources": [],
+    "answerable": false
+  },
+  {
+    "question": "When was the server originally purchased?",
+    "relevant_sources": [],
+    "answerable": false
+  },
+  {
+    "question": "What is the server's serial number?",
+    "relevant_sources": [],
+    "answerable": false
+  },
+  {
+    "question": "Where is the server physically located?",
+    "relevant_sources": [],
+    "answerable": false
+  }
+]
